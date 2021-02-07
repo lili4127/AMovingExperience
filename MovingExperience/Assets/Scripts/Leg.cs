@@ -17,16 +17,22 @@ public class Leg : MonoBehaviour
     public string currentPlatform;
     Gyroscope gyro;
 
+    public HealthBar healthBar;
+
+    private void Awake()
+    {
+        rb = this.GetComponent<Rigidbody>();
+        col = this.GetComponent<CapsuleCollider>();
+        currentPlatform = "Platform 5";
+    }
+
 
     // Start is called before the first frame update
     void Start()
     {
         noParent = true;
-        rb = this.GetComponent<Rigidbody>();
-        col = this.GetComponent<CapsuleCollider>();
         jumpForce = 20f;
         width = (float)Screen.width / 2.0f;
-        currentPlatform = "Platform 5";
         EnableGyro();
     }
 
@@ -52,7 +58,7 @@ public class Leg : MonoBehaviour
                 //left side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x < (int)(Screen.height / 2f))
                 {
-                    rb.AddForce(Vector3.up * 2 * jumpForce, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * 3 * (jumpForce/2), ForceMode.Impulse);
                     rb.AddForce(Vector3.left * jumpForce, ForceMode.Impulse);
 
                 }
@@ -60,7 +66,7 @@ public class Leg : MonoBehaviour
                 //right side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x > (int)(Screen.height / 2f))
                 {
-                    rb.AddForce(Vector3.up * 2 * jumpForce, ForceMode.Impulse);
+                    rb.AddForce(Vector3.up * 3 * (jumpForce / 2), ForceMode.Impulse);
                     rb.AddForce(Vector3.right * jumpForce, ForceMode.Impulse);
                 }
             }
@@ -87,6 +93,7 @@ public class Leg : MonoBehaviour
             rb.velocity = Vector3.zero;
             GameObject p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+            healthBar.LoseHealth(5);
         }
     }
 

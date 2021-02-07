@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-// answers.unity.com/questions/620146/how-to-gradually-grow-and-shrink-an-object.html
+//answers.unity.com/questions/620146/how-to-gradually-grow-and-shrink-an-object.html
 public class RingController : MonoBehaviour
 {
     float scaleRate = 1.0f;
     float minScale = 0.5f;
-    float maxScale = 5f;
-    public float speed = 3.0f;
+    float maxScale = 15f;
+    public float speed = 15f;
     // Start is called before the first frame update
     void Start()
     {

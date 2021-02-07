@@ -11,13 +11,19 @@ public class Body : MonoBehaviour
     public string currentPlatform;
     Gyroscope gyro;
 
+    public HealthBar healthBar;
+
+    private void Awake()
+    {
+        currentPlatform = "Platform 3";
+        rb = this.GetComponent<Rigidbody>();
+    }
+
     // Start is called before the first frame update
     void Start()
     {
         noParent = true;
-        currentPlatform = "Platform 3";
         EnableGyro();
-        rb = this.GetComponent<Rigidbody>();
     }
 
     // Update is called once per frame
@@ -62,6 +68,7 @@ public class Body : MonoBehaviour
             rb.velocity = Vector3.zero;
             GameObject p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+            healthBar.LoseHealth(5);
         }
     }
 

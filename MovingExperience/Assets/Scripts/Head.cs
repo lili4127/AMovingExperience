@@ -22,6 +22,8 @@ public class Head : MonoBehaviour
     public Button aimRight;
     public Button aimShoot;
 
+    public HealthBar healthBar;
+
     private void Awake()
     {
         currentPlatform = "Platform 1";
@@ -38,6 +40,7 @@ public class Head : MonoBehaviour
         aimLeft.gameObject.SetActive(false);
         aimRight.gameObject.SetActive(false);
         aimShoot.gameObject.SetActive(false);
+        healthBar.SetMaxHealth(100);
     }
 
     void FixedUpdate()
@@ -108,6 +111,7 @@ public class Head : MonoBehaviour
             rb.velocity = Vector3.zero;
             GameObject p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+            healthBar.LoseHealth(5);
         }
     }
 }
