@@ -12,12 +12,15 @@ public class Head : MonoBehaviour
     public GameObject pBody;
     private Rigidbody rb;
     Gyroscope gyro;
+
     public string currentPlatform;
+    GameObject p;
 
     //Cannon Variables
     public GameObject cannon;
     public bool shot;
     private Transform FPS;
+
     public Button aimLeft;
     public Button aimRight;
     public Button aimShoot;
@@ -36,11 +39,15 @@ public class Head : MonoBehaviour
         noParent = true;
         rb = this.GetComponent<Rigidbody>();
         EnableGyro();
+
         shot = true;
         aimLeft.gameObject.SetActive(false);
         aimRight.gameObject.SetActive(false);
         aimShoot.gameObject.SetActive(false);
-        healthBar.SetMaxHealth(100);
+
+        p = GameObject.Find(currentPlatform);
+
+        this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
     }
 
     void FixedUpdate()
@@ -68,6 +75,14 @@ public class Head : MonoBehaviour
         if (!shot)
         {
             this.transform.position = cannon.transform.position + Vector3.up;
+        }
+
+        if(this.transform.position.y < -100)
+        {
+            rb.velocity = Vector3.zero;
+            p = GameObject.Find(currentPlatform);
+            this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+            healthBar.LoseHealth(5);
         }
     }
 
@@ -109,7 +124,7 @@ public class Head : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.velocity = Vector3.zero;
-            GameObject p = GameObject.Find(currentPlatform);
+            p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
             healthBar.LoseHealth(5);
         }

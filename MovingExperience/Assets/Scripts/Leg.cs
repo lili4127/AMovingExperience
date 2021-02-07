@@ -14,9 +14,11 @@ public class Leg : MonoBehaviour
     private Rigidbody rb;
     private CapsuleCollider col;
     private float width;
-    public string currentPlatform;
     Gyroscope gyro;
 
+    public string currentPlatform;
+    GameObject p;
+    
     public HealthBar healthBar;
 
     private void Awake()
@@ -31,9 +33,12 @@ public class Leg : MonoBehaviour
     void Start()
     {
         noParent = true;
-        jumpForce = 20f;
+        jumpForce = 15f;
         width = (float)Screen.width / 2.0f;
         EnableGyro();
+
+        p = GameObject.Find(currentPlatform);
+        this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
     }
 
     // Update is called once per frame
@@ -51,6 +56,14 @@ public class Leg : MonoBehaviour
             transform.rotation = Quaternion.identity;
             transform.Translate(movement);
 
+            if (this.transform.position.y < -100)
+            {
+                rb.velocity = Vector3.zero;
+                p = GameObject.Find(currentPlatform);
+                this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+                healthBar.LoseHealth(5);
+            }
+
             if (isGrounded() && Input.touchCount > 0)
             {
                 Touch t = Input.GetTouch(0);
@@ -58,18 +71,22 @@ public class Leg : MonoBehaviour
                 //left side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x < (int)(Screen.height / 2f))
                 {
-                    rb.AddForce(Vector3.up * 3 * (jumpForce/2), ForceMode.Impulse);
+                    rb.AddForce((Vector3.up * 2f) * jumpForce, ForceMode.Impulse);
                     rb.AddForce(Vector3.left * jumpForce, ForceMode.Impulse);
-
                 }
 
                 //right side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x > (int)(Screen.height / 2f))
                 {
-                    rb.AddForce(Vector3.up * 3 * (jumpForce / 2), ForceMode.Impulse);
+                    rb.AddForce((Vector3.up * 2f) * jumpForce, ForceMode.Impulse);
                     rb.AddForce(Vector3.right * jumpForce, ForceMode.Impulse);
                 }
             }
+        }
+
+        if(currentPlatform == "Platform 8")
+        {
+            FindObjectOfType<GameManager>().WinGame();
         }
     }
 
@@ -91,7 +108,7 @@ public class Leg : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.velocity = Vector3.zero;
-            GameObject p = GameObject.Find(currentPlatform);
+            p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
             healthBar.LoseHealth(5);
         }

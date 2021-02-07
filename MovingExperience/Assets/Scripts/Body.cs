@@ -8,8 +8,10 @@ public class Body : MonoBehaviour
     private Rigidbody rb;
     public GameObject pLeg;
     public bool noParent;
-    public string currentPlatform;
     Gyroscope gyro;
+
+    public string currentPlatform;
+    GameObject p;
 
     public HealthBar healthBar;
 
@@ -24,6 +26,9 @@ public class Body : MonoBehaviour
     {
         noParent = true;
         EnableGyro();
+
+        p = GameObject.Find(currentPlatform);
+        this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
     }
 
     // Update is called once per frame
@@ -40,6 +45,14 @@ public class Body : MonoBehaviour
 
             transform.rotation = Quaternion.identity;
             transform.Translate(movement);
+
+            if (this.transform.position.y < -100)
+            {
+                rb.velocity = Vector3.zero;
+                p = GameObject.Find(currentPlatform);
+                this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
+                healthBar.LoseHealth(5);
+            }
         }
 
         if (!noParent)
@@ -66,7 +79,7 @@ public class Body : MonoBehaviour
         if (collision.gameObject.tag == "Ground")
         {
             rb.velocity = Vector3.zero;
-            GameObject p = GameObject.Find(currentPlatform);
+            p = GameObject.Find(currentPlatform);
             this.transform.position = p.transform.position + new Vector3(0f, 10f, 0f);
             healthBar.LoseHealth(5);
         }
