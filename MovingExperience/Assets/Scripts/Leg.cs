@@ -71,14 +71,14 @@ public class Leg : MonoBehaviour
                 //left side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x < (int)(Screen.height / 2f))
                 {
-                    rb.AddForce((Vector3.up * 2f) * jumpForce, ForceMode.Impulse);
+                    rb.AddForce((Vector3.up * 2.5f) * jumpForce, ForceMode.Impulse);
                     rb.AddForce(Vector3.left * jumpForce, ForceMode.Impulse);
                 }
 
                 //right side of screen
                 if (t.phase == TouchPhase.Ended && (int)t.position.x > (int)(Screen.height / 2f))
                 {
-                    rb.AddForce((Vector3.up * 2f) * jumpForce, ForceMode.Impulse);
+                    rb.AddForce((Vector3.up * 2.5f) * jumpForce, ForceMode.Impulse);
                     rb.AddForce(Vector3.right * jumpForce, ForceMode.Impulse);
                 }
             }

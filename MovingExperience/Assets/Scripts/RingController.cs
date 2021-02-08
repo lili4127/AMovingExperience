@@ -7,7 +7,7 @@ public class RingController : MonoBehaviour
 {
     float scaleRate = 1.0f;
     float minScale = 0.5f;
-    float maxScale = 15f;
+    float maxScale = 10f;
     public float speed = 15f;
     // Start is called before the first frame update
     void Start()
