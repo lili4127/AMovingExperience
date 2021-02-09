@@ -9,10 +9,16 @@ public class RingController : MonoBehaviour
     float minScale = 0.5f;
     float maxScale = 10f;
     public float speed = 15f;
+
+    public GameObject player;
+    Rigidbody rb;
+    Leg leg;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+        rb = player.GetComponent<Rigidbody>();
+        leg = player.GetComponent<Leg>();
     }
 
     // Update is called once per frame
@@ -20,8 +26,8 @@ public class RingController : MonoBehaviour
     {
         Scale();
     }
- 
- void ApplyScaleRate()
+
+    void ApplyScaleRate()
     {
         transform.localScale += Vector3.one * scaleRate * Time.deltaTime * speed;
     }
@@ -38,5 +44,15 @@ public class RingController : MonoBehaviour
             scaleRate = -Mathf.Abs(scaleRate);
         }
         ApplyScaleRate();
+    }
+
+    private void OnTriggerEnter(Collider other)
+    {
+        if(other.gameObject.tag == "Head" || other.gameObject.tag == "Body" || other.gameObject.tag == "Leg")
+        {
+            leg.healthBar.LoseHealth(5);
+            rb.velocity = Vector3.zero;
+            rb.AddForce(Vector3.right * 10);
+        }
     }
 }

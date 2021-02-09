@@ -16,24 +16,31 @@ public class Head : MonoBehaviour
     public string currentPlatform;
     GameObject p;
 
-    //Cannon Variables
+    //Cannon Variables to interact with the Head on platform 1
     public GameObject cannon;
     public bool shot;
-    private Transform FPS;
-
     public Button aimLeft;
     public Button aimRight;
     public Button aimShoot;
 
     public HealthBar healthBar;
 
+    //First person camera
+    private Transform FPCam;
+
+    /**
+     * Set current platform to starting platform of game and get camera attached to head
+     */
     private void Awake()
     {
         currentPlatform = "Platform 1";
-        FPS = this.transform.GetChild(0);
+        FPCam = this.transform.GetChild(0);
     }
 
-    // Start is called before the first frame update
+    /**
+     * Set ball's initial position on platform one, enable the gyroscope, and
+     * set booleans so that head knows it is alone and not on cannon so it can move
+     */
     void Start()
     {
         noParent = true;
@@ -72,6 +79,7 @@ public class Head : MonoBehaviour
             this.currentPlatform = pBody.GetComponent<Body>().currentPlatform;
         }
 
+        //if shot is false ball is currently on cannon
         if (!shot)
         {
             this.transform.position = cannon.transform.position + Vector3.up;
