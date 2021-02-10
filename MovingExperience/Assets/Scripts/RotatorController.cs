@@ -8,17 +8,9 @@ public class RotatorController : MonoBehaviour
     public GameObject p2;
     public GameObject p3;
     public GameObject p4;
-
-    //the angle to complete in deltaTime
     public int speed = 60;
 
-
-    // Start is called before the first frame update
-    void Start()
-    {
-    }
-
-    // Update is called once per frame
+    //rotate each platform around parent circle's position and the z axis so they make circles
     void FixedUpdate()
     {
 

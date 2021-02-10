@@ -9,16 +9,16 @@ public class Countdown : MonoBehaviour
 {
 
     public float currentTime = 0f;
-    public float startingTime = 100f;
+    public float startingTime = 120f;
     [SerializeField] Text countdownText;
 
-    // Start is called before the first frame update
+    //set starting time to 120 seconds
     void Start()
     {
         currentTime = startingTime;
     }
 
-    // Update is called once per frame
+    //update current time relative to deltaTime by 1 second. Stop time from going negative.
     void Update()
     {
         currentTime -= 1 * Time.deltaTime;

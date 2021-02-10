@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class IcicleController : MonoBehaviour
 {
+    //icicle and player variables
     public GameObject i;
     public GameObject player;
     Body b;
     bool crossed;
 
-    // Start is called before the first frame update
+    //start coroutine to create icicles until player has crossed platform 4
     void Start()
     {
         b = player.GetComponent<Body>();
@@ -17,6 +18,7 @@ public class IcicleController : MonoBehaviour
         StartCoroutine(MakeIcicles(i, 0.2f));
     }
 
+    //when player successfully reaches platform 4.5 stop coroutine
     private void Update()
     {
         if (b.currentPlatform == "Platform 4.5")
@@ -25,6 +27,7 @@ public class IcicleController : MonoBehaviour
         }
     }
 
+    //continue to create icicles while player has not crossed platform 4
     IEnumerator MakeIcicles(GameObject icicle, float delay)
     {
         while (!crossed)

@@ -28,19 +28,15 @@ public class Head : MonoBehaviour
     //First person camera
     private Transform FPCam;
 
-    /**
-     * Set current platform to starting platform of game and get camera attached to head
-     */
+     //Set current platform to starting platform of game and get camera attached to head
     private void Awake()
     {
         currentPlatform = "Platform 1";
         FPCam = this.transform.GetChild(0);
     }
 
-    /**
-     * Set ball's initial position on platform one, enable the gyroscope, and
-     * set booleans so that head knows it is alone and not on cannon so it can move
-     */
+     //Set ball's initial position on platform one, enable the gyroscope, and
+     //set booleans so that head knows it is alone and not on cannon so it can move
     void Start()
     {
         noParent = true;
@@ -85,7 +81,9 @@ public class Head : MonoBehaviour
             this.transform.position = cannon.transform.position + Vector3.up;
         }
 
-        if(this.transform.position.y < -100)
+        //if head falls below -100 (falling down from a platform) reset its velocity to 0
+        //and place it above the center of its last saved platform. Lose 5 health for falling off.
+        if (this.transform.position.y < -100)
         {
             rb.velocity = Vector3.zero;
             p = GameObject.Find(currentPlatform);
@@ -113,13 +111,16 @@ public class Head : MonoBehaviour
         return false;
     }
 
+    //if head collides with different tags perform different functions
     private void OnCollisionEnter(Collision collision)
     {
+        //if head collides with a platform update current platform to be this last know platform it collided with
         if (collision.gameObject.tag == "Platform")
         {
             currentPlatform = collision.gameObject.name;
         }
 
+        //if head collides with cannon freeze its movement above cannon and activate cannon UI
         if (collision.gameObject.tag == "Cannon")
         {
             shot = false;
@@ -129,6 +130,7 @@ public class Head : MonoBehaviour
             aimShoot.gameObject.SetActive(true);
         }
 
+        //if head collides with ground reset its velocity to 0 and place it back onto its last known platform
         if (collision.gameObject.tag == "Ground")
         {
             rb.velocity = Vector3.zero;

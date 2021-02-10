@@ -7,25 +7,26 @@ public class Rollable : MonoBehaviour
     GameObject p;
     Rigidbody rb;
 
-    // Start is called before the first frame update
+    //set objects initial position on Platform 2
     void Start()
     {
         p = GameObject.Find("Platform 2");
-        this.transform.position = p.transform.position + new Vector3(0f, 3f, -8f);
+        this.transform.position = p.transform.position + new Vector3(0f, 3f, -5f);
         rb = this.GetComponent<Rigidbody>();
     }
 
-    // Update is called once per frame
+    //if box is accidentally rolled off platform bring it back
     void Update()
     {
         if (this.transform.position.y < -100)
         {
             rb.velocity = Vector3.zero;
             p = GameObject.Find("Platform 2");
-            this.transform.position = p.transform.position + new Vector3(0f, 3f, -8f);
+            this.transform.position = p.transform.position + new Vector3(0f, 3f, -5f);
         }
     }
 
+    //if box is accidentally rolled off platform and hits the ground bring it back
     private void OnCollisionEnter(Collision collision)
     {
 
@@ -33,7 +34,7 @@ public class Rollable : MonoBehaviour
         {
             rb.velocity = Vector3.zero;
             p = GameObject.Find("Platform 2");
-            this.transform.position = p.transform.position + new Vector3(0f, 10f, -8f);
+            this.transform.position = p.transform.position + new Vector3(0f, 3f, -5f);
         }
     }
 }

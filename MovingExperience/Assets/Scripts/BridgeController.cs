@@ -4,14 +4,10 @@ using UnityEngine;
 
 public class BridgeController : MonoBehaviour
 {
+    
     public float speed = 30f;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
 
-    // Update is called once per frame
+    //spin the bridge relative to the z axis at a designated speed
     void FixedUpdate()
     {
         this.transform.Rotate(Vector3.forward * Time.deltaTime * speed);
